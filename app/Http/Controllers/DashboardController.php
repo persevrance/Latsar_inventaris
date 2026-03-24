@@ -1,49 +1,25 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BarangItem;
+use App\Models\Peminjaman;
 
-class HistoryBarang extends Model
+class DashboardController extends Controller
 {
-    protected $table = 'history_barang';
-
-    public $timestamps = false;
-
-    protected $fillable = [
-        'barang_item_id',
-        'tanggal',
-        'aktivitas',
-        'kondisi_awal',
-        'kondisi_akhir',
-        'lokasi_awal',
-        'lokasi_akhir',
-        'user_id',
-        'referensi_id',
-        'keterangan'
-    ];
-
-    protected $casts = [
-        'tanggal' => 'datetime'
-    ];
-
-    public function barangItem()
+    public function admin()
     {
-        return $this->belongsTo(BarangItem::class);
+        return view('admin.dashboard.index', [
+            'total_barang' => BarangItem::count(),
+            'dipinjam' => BarangItem::where('status', 'dipinjam')->count(),
+            'maintenance' => BarangItem::where('status', 'maintenance')->count(),
+        ]);
     }
 
-    public function user()
+    public function pegawai()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function lokasiAwal()
-    {
-        return $this->belongsTo(Lokasi::class, 'lokasi_awal');
-    }
-
-    public function lokasiAkhir()
-    {
-        return $this->belongsTo(Lokasi::class, 'lokasi_akhir');
+        return view('pegawai.dashboard.index', [
+            'peminjaman' => Peminjaman::where('user_id', auth()->id())->count()
+        ]);
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <h1 class="text-xl font-bold mb-4">Verifikasi Peminjaman</h1>

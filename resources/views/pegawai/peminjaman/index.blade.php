@@ -1,5 +1,4 @@
-@extends('layouts.pegawai')
-
+@extends('layouts.pegawai')@extends('layouts.app')
 @section('content')
 <h1 class="text-xl">Riwayat</h1>
 

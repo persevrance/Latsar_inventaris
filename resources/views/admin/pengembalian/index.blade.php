@@ -1,5 +1,4 @@
-@extends('layouts.admin')
-
+@extends('layouts.app')
 @section('content')
 <h1 class="text-xl mb-4">Pengembalian</h1>
 
