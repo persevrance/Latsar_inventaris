@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PeminjamanRequest;
 use App\Models\Peminjaman;
 use App\Models\BarangItem;
 use App\Services\PeminjamanService;
@@ -33,11 +34,13 @@ class PeminjamanController extends Controller
     {
         try {
             $this->service->proses($id);
-
-            return back()->with('success', 'Peminjaman berhasil diproses');
+            return redirect()
+                ->back()
+                ->with('success', 'Peminjaman berhasil diproses');
         } catch (\Exception $e) {
-
-            return back()->with('error', $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
         }
     }
 
@@ -55,20 +58,22 @@ class PeminjamanController extends Controller
         return view('pegawai.peminjaman.create', compact('barang'));
     }
 
-    public function store(Request $request)
+    public function store(PeminjamanRequest $request)
     {
-        $peminjaman = Peminjaman::create([
-            'user_id' => auth()->id(),
-            'tanggal_pengajuan' => now(),
-            'status' => 'pending'
-        ]);
+        try {
+            $data = $request->validated();
 
-        foreach ($request->barang_item_id as $item) {
-            $peminjaman->details()->create([
-                'barang_item_id' => $item
-            ]);
+            $this->service->create($data);
+
+            return redirect()
+                ->route('pegawai.peminjaman')
+                ->with('success', 'Pengajuan peminjaman berhasil');
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
         }
-
-        return redirect()->back()->with('success', 'Pengajuan berhasil');
     }
 }

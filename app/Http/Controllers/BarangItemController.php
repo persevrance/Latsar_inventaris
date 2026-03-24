@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BarangItemRequest;
 use App\Services\BarangItemService;
 use Illuminate\Http\Request;
 
@@ -24,15 +25,24 @@ class BarangItemController extends Controller
         return view('admin.barang-item.create');
     }
 
-    public function store(Request $request)
+    public function store(BarangItemRequest $request)
     {
         try {
-            $this->service->store($request->all());
+            //data sudah tervalidasi
+            $data = $request->validated();
 
-            return back()->with('success', 'Item berhasil ditambahkan');
+            //panggil service (SP)
+            $this->service->store($data);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Barang item berhasil ditambahkan');
         } catch (\Exception $e) {
 
-            return back()->with('error', $e->getMessage());
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
         }
     }
 }

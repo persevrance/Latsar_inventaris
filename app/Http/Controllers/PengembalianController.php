@@ -26,11 +26,13 @@ class PengembalianController extends Controller
     {
         try {
             $this->service->proses($id);
-
-            return back()->with('success', 'Pengembalian berhasil');
+            return redirect()
+                ->back()
+                ->with('success', 'Pengembalian berhasil');
         } catch (\Exception $e) {
-
-            return back()->with('error', $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
         }
     }
 }

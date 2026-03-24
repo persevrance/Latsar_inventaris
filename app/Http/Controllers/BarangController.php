@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BarangRequest;
 use App\Models\Barang;
 use App\Models\Kategori;
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
+use App\Services\BarangService;
 
 class BarangController extends Controller
 {
+    protected $service;
+
+
     public function index()
     {
         $data = Barang::with('kategori', 'lokasi')->get();
@@ -23,12 +28,22 @@ class BarangController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(BarangRequest $request)
     {
-        Barang::create($request->all());
+        try {
+            $data = $request->validated();
 
-        return redirect()->route('admin.barang')
-            ->with('success', 'Barang berhasil ditambahkan');
+            $this->service->store($data);
+
+            return redirect()
+                ->route('admin.barang')
+                ->with('success', 'Barang berhasil ditambahkan');
+        } catch (\Exception $e) {
+
+            return back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 
     public function edit($id)
@@ -40,11 +55,22 @@ class BarangController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(BarangRequest $request, $id)
     {
-        Barang::findOrFail($id)->update($request->all());
+        try {
+            $data = $request->validated();
 
-        return back()->with('success', 'Berhasil diupdate');
+            $this->service->update($id, $data);
+
+            return redirect()
+                ->route('admin.barang')
+                ->with('success', 'Barang berhasil diperbarui');
+        } catch (\Exception $e) {
+
+            return back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 
     public function destroy($id)
