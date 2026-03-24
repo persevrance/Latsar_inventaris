@@ -2,11 +2,43 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Repositories\PeminjamanRepository;
 use App\Models\Peminjaman;
+use Illuminate\Support\Facades\DB;
 
 class PeminjamanService extends BaseService
 {
+    protected $repo;
+
+    public function __construct(PeminjamanRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+    // ================= READ =================
+
+    public function getAll()
+    {
+        return $this->repo->getAll();
+    }
+
+    public function getByUser()
+    {
+        return $this->repo->getByUser(auth()->id());
+    }
+
+    public function getById($id)
+    {
+        return $this->repo->getById($id);
+    }
+
+    public function getPending()
+    {
+        return $this->repo->getPending();
+    }
+
+    // ================= WRITE =================
+
     public function create($data)
     {
         DB::beginTransaction();
@@ -28,7 +60,7 @@ class PeminjamanService extends BaseService
             return $peminjaman;
         } catch (\Throwable $e) {
             DB::rollBack();
-            throw new \Exception("Gagal membuat peminjaman: " . $e->getMessage());
+            throw new \Exception($e->getMessage());
         }
     }
 

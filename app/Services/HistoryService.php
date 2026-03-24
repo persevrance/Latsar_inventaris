@@ -2,23 +2,29 @@
 
 namespace App\Services;
 
-use App\Models\HistoryBarang;
+use App\Repositories\HistoryRepository;
 
 class HistoryService
 {
-    public function getByItem($barang_item_id)
+    protected $repo;
+
+    public function __construct(HistoryRepository $repo)
     {
-        return HistoryBarang::where('barang_item_id', $barang_item_id)
-            ->with('user')
-            ->latest()
-            ->get();
+        $this->repo = $repo;
     }
 
     public function latest($limit = 10)
     {
-        return HistoryBarang::with('barangItem.barang', 'user')
-            ->latest()
-            ->limit($limit)
-            ->get();
+        return $this->repo->latest($limit);
+    }
+
+    public function getByItem($barang_item_id)
+    {
+        return $this->repo->getByItem($barang_item_id);
+    }
+
+    public function getByUser($user_id)
+    {
+        return $this->repo->getByUser($user_id);
     }
 }

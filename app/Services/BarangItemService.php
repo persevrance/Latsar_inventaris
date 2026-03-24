@@ -2,10 +2,34 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
+use App\Repositories\BarangItemRepository;
 
 class BarangItemService extends BaseService
 {
+    protected $repo;
+
+    public function __construct(BarangItemRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
+    // READ
+    public function getAll()
+    {
+        return $this->repo->getAll();
+    }
+
+    public function getAvailable()
+    {
+        return $this->repo->getAvailable();
+    }
+
+    public function getByKode($kode)
+    {
+        return $this->repo->getByKode($kode);
+    }
+
+    // WRITE (WAJIB SP)
     public function store($data)
     {
         return $this->callSP(

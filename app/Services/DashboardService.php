@@ -2,25 +2,24 @@
 
 namespace App\Services;
 
-use App\Models\BarangItem;
-use App\Models\Peminjaman;
+use App\Repositories\DashboardRepository;
 
 class DashboardService
 {
+    protected $repo;
+
+    public function __construct(DashboardRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
     public function adminStats()
     {
-        return [
-            'total_barang' => BarangItem::count(),
-            'tersedia' => BarangItem::where('status', 'tersedia')->count(),
-            'dipinjam' => BarangItem::where('status', 'dipinjam')->count(),
-            'maintenance' => BarangItem::where('status', 'maintenance')->count(),
-        ];
+        return $this->repo->statsAdmin();
     }
 
     public function pegawaiStats()
     {
-        return [
-            'total_peminjaman' => Peminjaman::where('user_id', auth()->id())->count()
-        ];
+        return $this->repo->statsPegawai(auth()->id());
     }
 }
