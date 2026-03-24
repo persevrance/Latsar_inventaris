@@ -31,9 +31,14 @@ class PeminjamanController extends Controller
 
     public function proses($id)
     {
-        $this->service->proses($id);
+        try {
+            $this->service->proses($id);
 
-        return back()->with('success', 'Peminjaman diproses');
+            return back()->with('success', 'Peminjaman berhasil diproses');
+        } catch (\Exception $e) {
+
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     // ================= PEGAWAI =================

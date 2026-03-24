@@ -24,8 +24,13 @@ class PengembalianController extends Controller
 
     public function proses($id)
     {
-        $this->service->proses($id);
+        try {
+            $this->service->proses($id);
 
-        return back()->with('success', 'Pengembalian berhasil');
+            return back()->with('success', 'Pengembalian berhasil');
+        } catch (\Exception $e) {
+
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

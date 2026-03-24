@@ -26,8 +26,13 @@ class BarangItemController extends Controller
 
     public function store(Request $request)
     {
-        $this->service->store($request->all());
+        try {
+            $this->service->store($request->all());
 
-        return back()->with('success', 'Item berhasil ditambahkan');
+            return back()->with('success', 'Item berhasil ditambahkan');
+        } catch (\Exception $e) {
+
+            return back()->with('error', $e->getMessage());
+        }
     }
 }
