@@ -45,4 +45,16 @@ class BarangItem extends Model
     {
         return $this->hasMany(DetailPengembalian::class);
     }
+
+    public function peminjamanAktif()
+    {
+        return $this->hasOneThrough(
+            \App\Models\Peminjaman::class,
+            \App\Models\DetailPeminjaman::class,
+            'barang_item_id',
+            'id',
+            'id',
+            'peminjaman_id'
+        )->where('status', 'active');
+    }
 }

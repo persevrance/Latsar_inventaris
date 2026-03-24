@@ -1,28 +1,89 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="text-xl font-bold mb-4">Tambah Barang Item</h1>
+<div class="px-4 md:px-24 py-6 space-y-6">
 
-<form method="POST" action="/admin/barang-item">
-    @csrf
+    <h1 class="text-xl font-bold">Tambah Barang</h1>
 
-    <input name="kode_item" class="border p-2 w-full mb-2" placeholder="Kode Item">
-    @error('kode_item') <small class="text-red-500">{{ $message }}</small> @enderror
+    <form method="POST" action="{{ route('barang.store') }}" class="space-y-4">
+        @csrf
 
-    <select name="barang_id" class="border p-2 w-full mb-2">
-        @foreach($barang as $b)
-        <option value="{{ $b->id }}">{{ $b->nama_barang }}</option>
-        @endforeach
-    </select>
+        {{-- NAMA BARANG --}}
+        <div>
+            <label class="block mb-1 font-medium">Nama Barang</label>
+            <input name="nama_barang"
+                value="{{ old('nama_barang') }}"
+                class="border p-2 w-full rounded"
+                placeholder="Contoh: Router Mikrotik">
 
-    <select name="lokasi_id" class="border p-2 w-full mb-2">
-        @foreach($lokasi as $l)
-        <option value="{{ $l->id }}">{{ $l->nama_lokasi }}</option>
-        @endforeach
-    </select>
+            @error('nama_barang')
+            <small class="text-red-500">{{ $message }}</small>
+            @enderror
+        </div>
 
-    <button class="bg-green-500 text-white px-4 py-2 rounded">
-        Simpan
-    </button>
-</form>
+        {{-- KODE BARANG --}}
+        <div>
+            <label class="block mb-1 font-medium">Kode Barang</label>
+            <input name="kode_barang"
+                value="{{ old('kode_barang') }}"
+                class="border p-2 w-full rounded"
+                placeholder="Auto generate, tidak perlu diisi" disabled>
+
+            @error('kode_barang')
+            <small class="text-red-500">{{ $message }}</small>
+            @enderror
+        </div>
+
+        {{-- KATEGORI --}}
+        <div>
+            <label class="block mb-1 font-medium">Kategori</label>
+            <select name="kategori_id" class="border p-2 w-full rounded">
+                <option value="">-- Pilih Kategori --</option>
+
+                @foreach($kategori as $k)
+                <option value="{{ $k->id }}"
+                    {{ old('kategori_id') == $k->id ? 'selected' : '' }}>
+                    {{ $k->nama_kategori }}
+                </option>
+                @endforeach
+            </select>
+
+            @error('kategori_id')
+            <small class="text-red-500">{{ $message }}</small>
+            @enderror
+        </div>
+
+        {{-- LOKASI PENYIMPANAN --}}
+        <div>
+            <label class="block mb-1 font-medium">Lokasi Penyimpanan</label>
+            <select name="lokasi_id" class="border p-2 w-full rounded">
+                <option value="">-- Pilih Lokasi --</option>
+
+                @foreach($lokasi as $l)
+                <option value="{{ $l->id }}"
+                    {{ old('lokasi_id') == $l->id ? 'selected' : '' }}>
+                    {{ $l->nama_lokasi }}
+                </option>
+                @endforeach
+            </select>
+
+            @error('lokasi_id')
+            <small class="text-red-500">{{ $message }}</small>
+            @enderror
+        </div>
+
+        {{-- BUTTON --}}
+        <div class="flex gap-2">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded">
+                Simpan
+            </button>
+
+            <a href="{{ route('barang.index') }}"
+                class="bg-gray-500 text-white px-4 py-2 rounded">
+                Kembali
+            </a>
+        </div>
+    </form>
+
+</div>
 @endsection

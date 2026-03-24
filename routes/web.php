@@ -21,7 +21,9 @@ Route::get('/', function () {
 });
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
 
 /*
@@ -37,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'admin']);
 
         Route::resource('/barang', BarangController::class);
+        Route::resource('/barang-item', BarangItemController::class);
 
         Route::get('/peminjaman', [PeminjamanController::class, 'index']);
         Route::get('/peminjaman/{id}/verifikasi', [PeminjamanController::class, 'verifikasi']);
@@ -49,6 +52,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/users/create', [AuthController::class, 'showRegister']);
         Route::post('/users', [AuthController::class, 'register']);
+
+        Route::get('/arsip', [BarangController::class, 'arsip'])
+            ->name('barang.arsip');
+        Route::get('/admin/arsip/{id}', [BarangController::class, 'showArsip'])
+            ->name('barang.arsip.show');
     });
 
     Route::prefix('pegawai')->middleware('role:pegawai')->group(function () {

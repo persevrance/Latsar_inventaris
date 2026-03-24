@@ -30,19 +30,18 @@ class BarangItemService extends BaseService
     }
 
     // WRITE (WAJIB SP)
-    public function store($data)
+    public function store(array $data)
     {
-        return $this->callSP(
-            'CALL sp_tambah_barang_item(?,?,?,?)',
-            [
-                $data['barang_id'],
-                $data['kode_item'],
-                $data['lokasi_id'],
-                auth()->id()
-            ]
-        );
-    }
+        $data['kode_item'] = $this->generateKodeItem($data['barang_id']);
 
+        return \App\Models\BarangItem::create([
+            'kode_item' => $data['kode_item'],
+            'barang_id' => $data['barang_id'],
+            'rak' => $data['rak'] ?? null,
+            'status' => 'tersedia',
+            'lokasi_id' => null,
+        ]);
+    }
     public function updateKondisi($id, $kondisi, $keterangan = null)
     {
         return $this->callSP(
@@ -66,5 +65,26 @@ class BarangItemService extends BaseService
                 auth()->id()
             ]
         );
+    }
+
+    public function generateKodeItem($barang_id)
+    {
+        $barang = \App\Models\Barang::findOrFail($barang_id);
+
+        $kodeBarang = $barang->kode_barang;
+
+        // Ambil item terakhir
+        $last = \App\Models\BarangItem::where('barang_id', $barang_id)
+            ->orderBy('kode_item', 'desc')
+            ->first();
+
+        if (!$last) {
+            $number = 1;
+        } else {
+            $lastNumber = (int) substr($last->kode_item, -2);
+            $number = $lastNumber + 1;
+        }
+
+        return $kodeBarang . '-' . str_pad($number, 2, '0', STR_PAD_LEFT);
     }
 }

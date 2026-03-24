@@ -8,15 +8,24 @@ use App\Models\Kategori;
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
 use App\Services\BarangService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
     protected $service;
 
+    public function __construct(BarangService $service)
+    {
+        $this->service = $service;
+    }
 
     public function index()
     {
-        $data = Barang::with('kategori', 'lokasi')->get();
+        $data = Barang::with(['lokasi'])
+            ->withCount('items')
+            ->get();
+
         return view('admin.barang.index', compact('data'));
     }
 
@@ -36,7 +45,7 @@ class BarangController extends Controller
             $this->service->store($data);
 
             return redirect()
-                ->route('admin.barang')
+                ->route('barang.index')
                 ->with('success', 'Barang berhasil ditambahkan');
         } catch (\Exception $e) {
 
@@ -63,7 +72,7 @@ class BarangController extends Controller
             $this->service->update($id, $data);
 
             return redirect()
-                ->route('admin.barang')
+                ->route('barang.index')
                 ->with('success', 'Barang berhasil diperbarui');
         } catch (\Exception $e) {
 
@@ -75,14 +84,90 @@ class BarangController extends Controller
 
     public function destroy($id)
     {
-        Barang::destroy($id);
-        return back()->with('success', 'Berhasil dihapus');
+        DB::beginTransaction();
+
+        try {
+            $barang = Barang::with(['items'])
+                ->withCount('items')
+                ->findOrFail($id);
+
+            DB::table('arsip_barang')->insert([
+                'barang_id' => $barang->id,
+                'nama_barang' => $barang->nama_barang,
+                'kode_barang' => $barang->kode_barang,
+                'lokasi_id' => $barang->lokasi_id,
+                'items_count' => $barang->items_count,
+                'data_json' => json_encode([
+                    'barang' => $barang->only([
+                        'id',
+                        'nama_barang',
+                        'kode_barang',
+                        'lokasi_id'
+                    ]),
+                    'items' => $barang->items->map(function ($item) {
+                        return $item->only([
+                            'id',
+                            'kode_item',
+                            'status',
+                            'rak'
+                        ]);
+                    })
+                ]),
+                'archived_by' => Auth::id(),
+            ]);
+
+            $barang->delete();
+
+            DB::commit();
+
+            return back()->with('success', 'Barang berhasil diarsipkan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', $e->getMessage());
+        }
     }
 
-    // Pegawai view
+    public function show(Barang $barang)
+    {
+        $barang->load([
+            'lokasi',
+            'items.lokasi',
+            'items.peminjamanAktif.user',
+        ]);
+
+        return view('admin.barang.show', compact('barang'));
+    }
+
+    public function arsip()
+    {
+        $data = \Illuminate\Support\Facades\DB::table('arsip_barang')
+            ->latest()
+            ->get();
+
+        return view('admin.arsip.index', compact('data'));
+    }
+
+    public function showArsip($id)
+    {
+        $arsip = DB::table('arsip_barang')->find($id);
+
+        if (!$arsip) {
+            abort(404);
+        }
+
+        $data = json_decode($arsip->data_json, true);
+
+        return view('admin.arsip.show', [
+            'arsip' => $arsip,
+            'barang' => $data['barang'] ?? [],
+            'items' => $data['items'] ?? []
+        ]);
+    }
+
     public function indexPegawai()
     {
-        $data = Barang::with('items')->get();
+        $data = Barang::with(['items', 'lokasi'])->get();
+
         return view('pegawai.barang.index', compact('data'));
     }
 }

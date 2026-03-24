@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BarangItemRequest;
 use App\Services\BarangItemService;
 use Illuminate\Http\Request;
+use App\Models\Barang;
+use App\Models\Lokasi;
 
 class BarangItemController extends Controller
 {
@@ -22,20 +24,20 @@ class BarangItemController extends Controller
 
     public function create()
     {
-        return view('admin.barang-item.create');
+        return view('admin.barang-item.create', [
+            'barang' => Barang::with('lokasi')->get(),
+        ]);
     }
 
     public function store(BarangItemRequest $request)
     {
         try {
-            //data sudah tervalidasi
             $data = $request->validated();
 
-            //panggil service (SP)
             $this->service->store($data);
 
             return redirect()
-                ->back()
+                ->route('barang.show', $data['barang_id'])
                 ->with('success', 'Barang item berhasil ditambahkan');
         } catch (\Exception $e) {
 

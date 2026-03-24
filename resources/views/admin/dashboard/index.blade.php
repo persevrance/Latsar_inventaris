@@ -17,5 +17,16 @@
         <p>Maintenance</p>
         <h2 class="text-xl font-bold">{{ $maintenance }}</h2>
     </div>
-</div>
-@endsection
+
+    <div class="bg-white p-4 rounded shadow">
+        <p>Non-Aktif</p>
+        <h2 class="text-xl font-bold">{{ $nonaktif }}</h2>
+
+
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+        <p>Arsip Barang</p>
+        <h2 class="text-xl font-bold">{{ $arsip }}</h2>
+    </div>
+    @endsection

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\BarangRepository;
 use App\Models\Barang;
+use App\Models\Kategori;
 
 class BarangService extends BaseService
 {
@@ -33,6 +34,8 @@ class BarangService extends BaseService
     // WRITE (simple → boleh langsung model)
     public function store($data)
     {
+        $data['kode_barang'] = $this->generateKodeBarang($data['kategori_id']);
+
         return Barang::create($data);
     }
 
@@ -47,5 +50,28 @@ class BarangService extends BaseService
     public function delete($id)
     {
         return Barang::destroy($id);
+    }
+
+
+    //
+    public function generateKodeBarang($kategori_id)
+    {
+        $kategori = Kategori::findOrFail($kategori_id);
+
+        $prefix = $kategori->prefix;
+
+        // Ambil kode terakhir berdasarkan prefix
+        $last = Barang::where('kode_barang', 'like', $prefix . '-%')
+            ->orderBy('kode_barang', 'desc')
+            ->first();
+
+        if (!$last) {
+            $number = 1;
+        } else {
+            $lastNumber = (int) substr($last->kode_barang, -3);
+            $number = $lastNumber + 1;
+        }
+
+        return $prefix . '-' . str_pad($number, 3, '0', STR_PAD_LEFT);
     }
 }
