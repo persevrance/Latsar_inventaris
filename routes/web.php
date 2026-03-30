@@ -35,6 +35,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::middleware(['auth'])->group(function () {
 
+    /* ADMIN ROUTES */
     Route::prefix('admin')->middleware('role:admin')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'admin']);
@@ -76,6 +77,8 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+
+    /* PEGAWAI ROUTES */
     Route::prefix('pegawai')->middleware('role:pegawai')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'pegawai']);

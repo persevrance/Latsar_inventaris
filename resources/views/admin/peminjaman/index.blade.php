@@ -10,8 +10,8 @@
             <thead class="bg-gray-100">
                 <tr>
                     <th class="p-3 text-left">No</th>
-                    <th class="p-3 text-left">ID</th>
-                    <th class="p-3 text-left">Peminjam</th>
+                    <th class="p-3 text-left">ID Pinjam</th>
+                    <th class="p-3 text-left">Nama Peminjam</th>
                     <th class="p-3 text-left">Tanggal Pengajuan</th>
                     <th class="p-3 text-left">Estimasi Tanggal Kembali</th>
                     <th class="p-3 text-left">Tanggal Kembali</th>
@@ -31,15 +31,15 @@
                     </td>
 
                     <td class="p-3">
-                        {{ $item->tanggal_pengajuan?->format('d-m-Y') }}
+                        {{ formatTanggal($item->tanggal_pengajuan) }}
                     </td>
 
                     <td class="p-3">
-                        {{ $item->tanggal_kembali_rencana?->format('d-m-Y') }}
+                        {{ formatTanggal($item->tanggal_kembali_rencana) }}
                     </td>
 
                     <td class="p-3">
-                        {{ $item->pengembalian?->tanggal_kembali?->format('d-m-Y') ?? '-' }}
+                        {{ formatTanggal($item->pengembalian?->tanggal_kembali) ?? '-' }}
                     </td>
 
                     <td class="p-3">

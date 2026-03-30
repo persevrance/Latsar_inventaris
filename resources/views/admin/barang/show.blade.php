@@ -9,7 +9,7 @@
 
         <div>
             <a href="{{ route('barang.index') }}"
-                class="bg-gray-500 text-white px-4 py-2 rounded">
+                class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
                 Kembali
             </a>
         </div>
@@ -57,7 +57,7 @@
                     <th class="p-2">Kode Item</th>
                     <th class="p-2">Rak</th>
                     <th class="p-2">Status</th>
-                    <th class="p-2">Peminjam</th>
+                    <th class="p-2">Nama Peminjam</th>
                     <th class="p-2">Tanggal Pinjam</th>
                     <th class="p-2">Lokasi Saat Ini</th>
                 </tr>
@@ -124,7 +124,7 @@
                     {{-- TANGGAL PINJAM --}}
                     <td class="p-2">
                         @if($item->peminjamanAktif && $item->peminjamanAktif->tanggal_pinjam)
-                        {{ \Carbon\Carbon::parse($item->peminjamanAktif->tanggal_pinjam)->format('d-m-Y') }}
+                        {{ formatTanggal($item->peminjamanAktif->tanggal_pinjam) }}
                         @else
                         -
                         @endif

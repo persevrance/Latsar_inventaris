@@ -19,7 +19,7 @@
         <div><strong>Kode:</strong> {{ $barang['kode_barang'] ?? '-' }}</div>
         <div><strong>Jumlah Item:</strong> {{ count($items) }}</div>
         <div><strong>Diarsipkan Pada:</strong>
-            {{ \Carbon\Carbon::parse($arsip->created_at)->format('d-m-Y H:i') }}
+            {{ formatTanggal($arsip->created_at) }}
         </div>
     </div>
 

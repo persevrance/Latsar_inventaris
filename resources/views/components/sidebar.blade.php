@@ -111,13 +111,30 @@
             {{ $user->email }}
         </p>
 
-        <form method="POST" action="{{ route('logout') }}" class="mt-2">
-            @csrf
-            <button type="submit"
-                class="text-xs text-red-300 hover:text-red-400 transition">
-                Logout
-            </button>
-        </form>
+        <div class="flex justify-end">
+            <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                @csrf
+
+                <button type="button" onclick="confirmLogout()"
+                    class="flex items-center gap-1.5 text-xs font-medium text-white/70 hover:text-red-300 transition">
+
+                    <!-- ICON -->
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2">
+
+                        <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+                    </svg>
+
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
     </div>
 </aside>
 

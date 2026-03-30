@@ -16,23 +16,23 @@
                 <th class="p-2">Lokasi</th>
                 <th class="p-2">Aktivitas</th>
                 <th class="p-2">Deskripsi</th>
-                <th class="p-2">Tanggal</th>
+                <th class="p-2">Tanggal Perubahan</th>
             </tr>
         </thead>
         <tbody>
             @foreach($data as $row)
-            <tr class="border-t">
+            <tr class="border-t text-center">
                 <td class="p-2">{{ $loop->iteration }}</td>
                 <td class="p-2">{{ $row->barangItem->barang->kode_barang ?? '-' }}</td>
-                <td class="p-2">{{ $row->barangItem->barang->nama_barang ?? '-' }}</td>
+                <td class="p-2 text-left">{{ $row->barangItem->barang->nama_barang ?? '-' }}</td>
                 <td class="p-2">{{ $row->barangItem->kode_item ?? '-' }}</td>
-                <td class="p-2">{{ $row->barangItem->barang->kategori->nama_kategori ?? '-' }}</td>
-                <td class="p-2">{{ $row->barangItem->lokasi->nama_lokasi ?? '-' }}</td>
-                <td class="p-2">{{ $row->aktivitas }}</td>
-                <td class="p-2">
+                <td class="p-2 text-left">{{ $row->barangItem->barang->kategori->nama_kategori ?? '-' }}</td>
+                <td class="p-2 text-left">{{ $row->barangItem->lokasi->nama_lokasi ?? '-' }}</td>
+                <td class="p-2 text-left">{{ $row->aktivitas }}</td>
+                <td class="p-2 text-left">
                     {{ $row->barangItem->detailPengembalian->first()->catatan ?? '-' }}
                 </td>
-                <td class="p-2">{{ ($row->tanggal) }}</td>
+                <td class="p-2">{{ formatTanggal($row->tanggal) }}</td>
             </tr>
             @endforeach
         </tbody>

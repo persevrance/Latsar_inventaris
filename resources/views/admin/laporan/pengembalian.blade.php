@@ -3,7 +3,12 @@
 @section('content')
 <div class="px-4 md:px-24 py-6 space-y-6">
 
-    <h1 class="text-xl font-bold mb-4">Laporan Pengembalian</h1>
+    <div class="flex flex-row gap-4 p-2 justify-between">
+        <h1 class="text-xl font-bold mb-4">Laporan Pengembalian</h1>
+        <a href="{{ route('admin.laporan.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
+            Kembali
+        </a>
+    </div>
 
     <form method="GET" class="mb-4 flex gap-2">
         <input type="date" name="tanggal_awal" class="border p-2">
@@ -13,26 +18,34 @@
 
     <table class="w-full border">
         <thead>
-            <tr class="bg-gray-100">
-                <th>User</th>
-                <th>Tanggal Kembali</th>
-                <th>Kode Barang</th>
-                <th>Barang</th>
+            <tr class="bg-gray-200">
+                <th class="p-2">No</th>
+                <th class="p-2">Nama Peminjam</th>
+                <th class="p-2">Tanggal Kembali</th>
+                <th class="p-2">Kode Barang</th>
+                <th class="p-2">Nama Barang</th>
+                <th class="p-2">Kode Item</th>
             </tr>
         </thead>
         <tbody>
             @foreach($data as $item)
-            <tr>
-                <td>{{ $item->peminjaman->user->nama }}</td>
-                <td>{{ $item->tanggal_kembali }}</td>
-                <td>
+            <tr class="text-center">
+                <td class="p-2">{{ $loop->iteration }}</td>
+                <td class="p-2 text-left">{{ $item->peminjaman->user->nama }}</td>
+                <td class="p-2">{{ formatTanggal($item->tanggal_kembali) }}</td>
+                <td class="p-2">
                     @foreach($item->details as $d)
                     {{ $d->barangItem->barang->kode_barang ?? '-' }} <br>
                     @endforeach
                 </td>
-                <td>
+                <td class="p-2 text-left">
                     @foreach($item->details as $d)
                     {{ $d->barangItem->barang->nama_barang ?? '-' }} <br>
+                    @endforeach
+                </td>
+                <td class="p-2">
+                    @foreach($item->details as $d)
+                    {{ $d->barangItem->kode_item ?? '-' }} <br>
                     @endforeach
                 </td>
             </tr>

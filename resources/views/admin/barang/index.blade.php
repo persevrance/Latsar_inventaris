@@ -4,7 +4,7 @@
 <div class="px-4 md:px-24 py-6 space-y-6">
     <h1 class="text-xl font-bold mb-4">Data Barang</h1>
 
-    <a href="{{ route('barang.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
+    <a href="{{ route('barang.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
         Tambah
     </a>
 
@@ -41,11 +41,13 @@
                     {{-- ARSIP --}}
                     <form method="POST"
                         action="{{ route('barang.destroy', $row->id) }}"
-                        onsubmit="return confirmArsip()">
+                        id="arsip-form-{{ $row->id }}">
+
                         @csrf
                         @method('DELETE')
 
-                        <button type="submit"
+                        <button type="button"
+                            onclick="confirmArsip({{ $row->id }})"
                             class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 transition">
                             Arsipkan
                         </button>
@@ -58,9 +60,32 @@
 </div>
 
 <script>
-    function confirmArsip() {
-        return confirm('Arsipkan barang ini? Data tidak akan dihapus permanen.');
+    window.confirmArsip = function(id) {
+        Swal.fire({
+            title: 'Arsipkan barang?',
+            text: 'Barang akan dipindahkan ke arsip.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#f59e0b',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, arsipkan',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                Swal.fire({
+                    title: 'Memproses...',
+                    text: 'Sedang mengarsipkan barang',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => Swal.showLoading(),
+                });
+
+                document.getElementById(`arsip-form-${id}`)?.submit();
+            }
+        });
     }
-</script>
 </script>
 @endsection

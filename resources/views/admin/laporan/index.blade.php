@@ -3,23 +3,29 @@
 @section('content')
 <div class="px-4 md:px-24 py-6 space-y-6">
 
-    <h1 class="text-2xl font-bold mb-6">Laporan</h1>
+    <h1 class="text-2xl font-bold mb-6">Menu Laporan</h1>
 
-    <div class="grid grid-cols-3 gap-4">
-        <a href="{{ route('admin.laporan.barang') }}" class="bg-white p-4 shadow rounded">
-            <h2 class="font-semibold">Laporan Barang</h2>
-        </a>
-
-        <a href="{{ route('admin.laporan.peminjaman') }}" class="bg-white p-4 shadow rounded">
-            <h2 class="font-semibold">Laporan Peminjaman</h2>
-        </a>
-
-        <a href="{{ route('admin.laporan.pengembalian') }}" class="bg-white p-4 shadow rounded">
-            <h2 class="font-semibold">Laporan Pengembalian</h2>
-        </a>
-        <a href="{{ route('admin.laporan.gabungan') }}" class="bg-white p-4 shadow rounded">
-            <h2 class="font-semibold">Laporan Gabungan</h2>
-        </a>
+    <div class="grid grid-cols-4 gap-4">
+        <div class="bg-white hover:bg-gray-100 p-4 shadow rounded">
+            <a href="{{ route('admin.laporan.barang') }}">
+                <h2 class="font-semibold">Laporan Barang</h2>
+            </a>
+        </div>
+        <div class="bg-white hover:bg-gray-100 p-4 shadow rounded">
+            <a href="{{ route('admin.laporan.peminjaman') }}">
+                <h2 class="font-semibold">Laporan Peminjaman</h2>
+            </a>
+        </div>
+        <div class="bg-white hover:bg-gray-100 p-4 shadow rounded">
+            <a href="{{ route('admin.laporan.pengembalian') }}">
+                <h2 class="font-semibold">Laporan Pengembalian</h2>
+            </a>
+        </div>
+        <div class="bg-white hover:bg-gray-100 p-4 shadow rounded">
+            <a href="{{ route('admin.laporan.gabungan') }}">
+                <h2 class="font-semibold">Laporan Gabungan</h2>
+            </a>
+        </div>
     </div>
 
 </div>

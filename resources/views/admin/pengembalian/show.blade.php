@@ -4,11 +4,11 @@
 <div class="px-4 md:px-24 py-6 space-y-6">
 
     <div class="flex flex-row items-center justify-between p-2 m-2">
-        <div class="p-4 font-semibold border-b">
+        <div class="p-2 text-lg font-bold">
             Detail Pengembalian
         </div>
         <div class="flex flex-row justify-end items-center gap-2">
-            <a href="{{ route('admin.peminjaman.index') }}" class="bg-gray-500 text-white px-3 py-1 rounded text-sm">
+            <a href="{{ route('admin.peminjaman.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded">
                 Kembali
             </a>
         </div>
@@ -17,7 +17,7 @@
         <p><strong>ID Peminjaman:</strong> {{ $peminjaman->id }}</p>
         <p><strong>Peminjam:</strong> {{ $peminjaman->user->nama }}</p>
         <p><strong>Tanggal Kembali:</strong>
-            {{ $peminjaman->pengembalian->tanggal_kembali->format('d-m-Y') }}
+            {{ formatTanggal($peminjaman->pengembalian->tanggal_kembali) }}
         </p>
         <p><strong>Diterima Oleh:</strong>
             {{ $peminjaman->pengembalian->penerima->nama ?? '-' }}

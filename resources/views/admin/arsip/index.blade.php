@@ -25,7 +25,7 @@
                 <td class="p-2">{{ $row->kode_barang }}</td>
                 <td class="p-2">{{ $row->items_count }}</td>
                 <td class="p-2">
-                    {{ \Carbon\Carbon::parse($row->created_at)->format('d-m-Y H:i') }}
+                    {{ formatTanggal($row->created_at) }}
                 </td>
                 <td class="p-2">
                     <a href="{{ route('barang.arsip.show', $row->id) }}"
