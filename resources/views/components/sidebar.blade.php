@@ -62,11 +62,6 @@
                     Laporan
                 </a>
 
-                <a href="/admin/history"
-                    class="{{ $baseLink }} {{ request()->is('admin/history*') ? $active : $inactive }}">
-                    History
-                </a>
-
                 <a href="/admin/users/create"
                     class="{{ $baseLink }} {{ request()->is('admin/users/create') ? $active : $inactive }}">
                     Tambah User

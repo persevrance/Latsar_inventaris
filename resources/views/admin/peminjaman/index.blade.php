@@ -10,7 +10,6 @@
             <thead class="bg-gray-100">
                 <tr>
                     <th class="p-3 text-left">No</th>
-                    <th class="p-3 text-left">ID Pinjam</th>
                     <th class="p-3 text-left">Nama Peminjam</th>
                     <th class="p-3 text-left">Tanggal Pengajuan</th>
                     <th class="p-3 text-left">Tanggal Pinjam</th>
@@ -25,7 +24,6 @@
                 @forelse($data as $item)
                 <tr class="border-t">
                     <td class="p-3">{{ $loop->iteration }}</td>
-                    <td class="p-3">{{ $item->id }}</td>
 
                     <td class="p-3">
                         {{ $item->user->nama ?? '-' }}

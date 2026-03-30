@@ -31,11 +31,6 @@ class BarangItem extends Model
         return $this->belongsTo(Lokasi::class);
     }
 
-    public function histories()
-    {
-        return $this->hasMany(HistoryBarang::class);
-    }
-
     public function detailPeminjaman()
     {
         return $this->hasMany(DetailPeminjaman::class);

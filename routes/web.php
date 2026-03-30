@@ -6,7 +6,6 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangItemController;
-use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\LaporanController;
@@ -54,9 +53,6 @@ Route::middleware(['auth'])->group(function () {
         // Route::get('/pengembalian', [PengembalianController::class, 'index']);
         Route::post('/pengembalian/{id}', [PengembalianController::class, 'proses']);
         Route::get('/pengembalian/{id}/detail', [PengembalianController::class, 'show']);
-
-        // history
-        Route::get('/history', [HistoryController::class, 'index']);
 
         // user management
         Route::get('/users/create', [AuthController::class, 'showRegister']);
