@@ -17,9 +17,11 @@
                 <th class="p-2">Kode Barang</th>
                 <th class="p-2">Nama Barang</th>
                 <th class="p-2">Kode Item</th>
+                <th class="p-2">Status</th>
                 <th class="p-2">Tanggal Input</th>
                 <th class="p-2">Kategori</th>
                 <th class="p-2">Lokasi</th>
+                <th class="p-2">Keterangan Pinjam</th>
             </tr>
         </thead>
         <tbody>
@@ -29,9 +31,13 @@
                 <td class="p-2">{{ $item->barang->kode_barang ?? '-' }}</td>
                 <td class="p-2 text-left">{{ $item->barang->nama_barang ?? '-' }}</td>
                 <td class="p-2 text-left">{{ $item->kode_item ?? '-' }}</td>
+                <td class="p-2 text-left">{{ ucfirst($item->status) }}</td>
                 <td class="p-2 text-left">{{ formatTanggal($item->created_at) ?? '-' }}</td>
                 <td class="p-2 text-left">{{ $item->barang->kategori->nama_kategori ?? '-' }}</td>
                 <td class="p-2 text-left">{{ $item->barang->lokasi->nama_lokasi ?? '-' }}</td>
+                <td class="p-2 text-left">
+                    {{ $item->detailPeminjaman->first()->peminjaman->keterangan ?? '-' }}
+                </td>
             </tr>
             @endforeach
         </tbody>

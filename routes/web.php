@@ -43,20 +43,26 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/barang', BarangController::class);
         Route::resource('/barang-item', BarangItemController::class);
 
+        // peminjaman
         Route::get('/peminjaman', [PeminjamanController::class, 'index'])
             ->name('admin.peminjaman.index');
         Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);
         Route::post('/peminjaman/{id}/proses', [PeminjamanController::class, 'proses']);
+        Route::post('/peminjaman/{id}/decline', [PeminjamanController::class, 'decline'])
+            ->name('admin.peminjaman.decline');
 
         // Route::get('/pengembalian', [PengembalianController::class, 'index']);
         Route::post('/pengembalian/{id}', [PengembalianController::class, 'proses']);
         Route::get('/pengembalian/{id}/detail', [PengembalianController::class, 'show']);
 
+        // history
         Route::get('/history', [HistoryController::class, 'index']);
 
+        // user management
         Route::get('/users/create', [AuthController::class, 'showRegister']);
         Route::post('/users', [AuthController::class, 'register']);
 
+        //arsip barang
         Route::get('/arsip', [BarangController::class, 'arsip'])
             ->name('barang.arsip');
         Route::get('/admin/arsip/{id}', [BarangController::class, 'showArsip'])
@@ -83,7 +89,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'pegawai']);
 
-        Route::get('/barang', [BarangController::class, 'indexPegawai']);
+        Route::get('/barang', [BarangController::class, 'indexPegawai'])
+            ->name('pegawai.barang');
 
         Route::get('/peminjaman', [PeminjamanController::class, 'indexPegawai']);
         Route::get('/peminjaman/create', [PeminjamanController::class, 'create']);

@@ -90,11 +90,6 @@
                     Peminjaman
                 </a>
 
-                <a href="/pegawai/history"
-                    class="{{ $baseLink }} {{ request()->is('pegawai/history*') ? $active : $inactive }}">
-                    History
-                </a>
-
                 @endif
 
             </div>

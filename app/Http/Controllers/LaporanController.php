@@ -16,7 +16,11 @@ class LaporanController extends Controller
 
     public function barang()
     {
-        $data = BarangItem::with(['barang.kategori', 'lokasi'])->get();
+        $data = BarangItem::with([
+            'barang.kategori',
+            'lokasi',
+            'detailPeminjaman.peminjaman'
+        ])->get();
 
         return view('admin.laporan.barang', compact('data'));
     }

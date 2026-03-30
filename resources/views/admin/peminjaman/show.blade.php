@@ -88,6 +88,14 @@
             </button>
         </form>
 
+        <form method="POST" action="{{ route('admin.peminjaman.decline', $data->id) }}">
+            @csrf
+            <button type="submit"
+                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                Decline
+            </button>
+        </form>
+
         {{-- KEMBALI --}}
         <a href="/admin/peminjaman"
             class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">

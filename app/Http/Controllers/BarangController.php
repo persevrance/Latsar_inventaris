@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BarangRequest;
 use App\Models\Barang;
+use App\Models\BarangItem;
 use App\Models\Kategori;
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
@@ -164,9 +165,24 @@ class BarangController extends Controller
         ]);
     }
 
-    public function indexPegawai()
+    public function indexPegawai(Request $request)
     {
-        $data = Barang::with(['items', 'lokasi'])->get();
+        $query = BarangItem::with([
+            'barang.kategori',
+            'barang.lokasi'
+        ]);
+
+        // SEARCH
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->whereHas('barang', function ($q) use ($search) {
+                $q->where('nama_barang', 'like', "%{$search}%")
+                    ->orWhere('kode_barang', 'like', "%{$search}%");
+            });
+        }
+
+        $data = $query->latest()->get();
 
         return view('pegawai.barang.index', compact('data'));
     }

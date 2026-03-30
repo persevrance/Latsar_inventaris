@@ -21,8 +21,20 @@ class DashboardController extends Controller
 
     public function pegawai()
     {
+        $userId = auth()->id();
+
         return view('pegawai.dashboard.index', [
-            'peminjaman' => Peminjaman::where('user_id', auth()->id())->count()
+            'total_barang' => BarangItem::count(),
+            'barang_ready' => BarangItem::where('status', 'ready')->count(),
+            'peminjaman_aktif' => Peminjaman::where('user_id', $userId)
+                ->where('status', 'approved')
+                ->count(),
+            'pending' => Peminjaman::where('user_id', $userId)
+                ->where('status', 'pending')
+                ->count(),
+            'history' => Peminjaman::where('user_id', $userId)
+                ->where('status', 'returned')
+                ->count(),
         ]);
     }
 }

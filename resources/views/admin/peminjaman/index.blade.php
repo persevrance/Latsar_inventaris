@@ -13,6 +13,7 @@
                     <th class="p-3 text-left">ID Pinjam</th>
                     <th class="p-3 text-left">Nama Peminjam</th>
                     <th class="p-3 text-left">Tanggal Pengajuan</th>
+                    <th class="p-3 text-left">Tanggal Pinjam</th>
                     <th class="p-3 text-left">Estimasi Tanggal Kembali</th>
                     <th class="p-3 text-left">Tanggal Kembali</th>
                     <th class="p-3 text-left">Status</th>
@@ -32,6 +33,10 @@
 
                     <td class="p-3">
                         {{ formatTanggal($item->tanggal_pengajuan) }}
+                    </td>
+
+                    <td class="p-3">
+                        {{ formatTanggal($item->tanggal_pinjam) }}
                     </td>
 
                     <td class="p-3">
