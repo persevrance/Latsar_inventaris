@@ -52,10 +52,10 @@
                     Peminjaman
                 </a>
 
-                <a href="/admin/pengembalian"
+                <!-- <a href="/admin/pengembalian"
                     class="{{ $baseLink }} {{ request()->is('admin/pengembalian*') ? $active : $inactive }}">
                     Pengembalian
-                </a>
+                </a> -->
 
                 <a href="/admin/laporan"
                     class="{{ $baseLink }} {{ request()->is('admin/laporan*') ? $active : $inactive }}">

@@ -24,6 +24,6 @@ class DetailPengembalian extends Model
 
     public function barangItem()
     {
-        return $this->belongsTo(BarangItem::class);
+        return $this->belongsTo(BarangItem::class, 'barang_item_id', 'id');
     }
 }

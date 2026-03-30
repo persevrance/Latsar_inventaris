@@ -11,11 +11,13 @@ class Pengembalian extends Model
     protected $fillable = [
         'peminjaman_id',
         'tanggal_kembali',
-        'diterima_by'
+        'diterima_by',
+        'updated_at'
     ];
 
     protected $casts = [
         'tanggal_kembali' => 'date',
+        'updated_at' => 'timestamp',
     ];
 
     public function peminjaman()

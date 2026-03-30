@@ -16,7 +16,8 @@ class Peminjaman extends Model
         'status',
         'approved_by',
         'approved_at',
-        'keterangan'
+        'keterangan',
+        'updated_at'
     ];
 
     protected $casts = [
@@ -25,6 +26,8 @@ class Peminjaman extends Model
         'tanggal_kembali_rencana' => 'date',
         'approved_at' => 'datetime',
     ];
+
+    protected $with = ['user']; // optimization
 
     public function user()
     {

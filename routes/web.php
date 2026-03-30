@@ -41,12 +41,14 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('/barang', BarangController::class);
         Route::resource('/barang-item', BarangItemController::class);
 
-        Route::get('/peminjaman', [PeminjamanController::class, 'index']);
-        Route::get('/peminjaman/{id}/verifikasi', [PeminjamanController::class, 'verifikasi']);
+        Route::get('/peminjaman', [PeminjamanController::class, 'index'])
+            ->name('admin.peminjaman.index');
+        Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);
         Route::post('/peminjaman/{id}/proses', [PeminjamanController::class, 'proses']);
 
-        Route::get('/pengembalian', [PengembalianController::class, 'index']);
+        // Route::get('/pengembalian', [PengembalianController::class, 'index']);
         Route::post('/pengembalian/{id}', [PengembalianController::class, 'proses']);
+        Route::get('/pengembalian/{id}/detail', [PengembalianController::class, 'show']);
 
         Route::get('/history', [HistoryController::class, 'index']);
 
