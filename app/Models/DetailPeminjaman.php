@@ -24,4 +24,13 @@ class DetailPeminjaman extends Model
     {
         return $this->belongsTo(BarangItem::class);
     }
+
+    public function pengembalianDetail()
+    {
+        return $this->hasOne(
+            DetailPengembalian::class,
+            'barang_item_id',
+            'barang_item_id'
+        );
+    }
 }

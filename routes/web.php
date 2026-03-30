@@ -9,6 +9,7 @@ use App\Http\Controllers\BarangItemController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,20 @@ Route::middleware(['auth'])->group(function () {
             ->name('barang.arsip');
         Route::get('/admin/arsip/{id}', [BarangController::class, 'showArsip'])
             ->name('barang.arsip.show');
+
+        //laporan
+        Route::prefix('laporan')->name('admin.laporan.')->group(function () {
+            Route::get('/', [LaporanController::class, 'index'])
+                ->name('index');
+            Route::get('/barang', [LaporanController::class, 'barang'])
+                ->name('barang');
+            Route::get('/peminjaman', [LaporanController::class, 'peminjaman'])
+                ->name('peminjaman');
+            Route::get('/pengembalian', [LaporanController::class, 'pengembalian'])
+                ->name('pengembalian');
+            Route::get('/gabungan', [LaporanController::class, 'gabungan'])
+                ->name('gabungan');
+        });
     });
 
     Route::prefix('pegawai')->middleware('role:pegawai')->group(function () {
