@@ -47,7 +47,7 @@
                         @method('DELETE')
 
                         <button type="button"
-                            onclick="confirmArsip({{ $row->id }})"
+                            onclick=`confirmArsip({{ $row->id }})`
                             class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 transition">
                             Arsipkan
                         </button>

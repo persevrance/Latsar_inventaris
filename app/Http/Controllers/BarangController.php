@@ -105,7 +105,7 @@ class BarangController extends Controller
                         'kode_barang',
                         'lokasi_id'
                     ]),
-                    'items' => $barang->items->map(function ($item) {
+                    'items' => collect($barang->items)->map(function ($item) {
                         return $item->only([
                             'id',
                             'kode_item',
@@ -141,7 +141,7 @@ class BarangController extends Controller
 
     public function arsip()
     {
-        $data = \Illuminate\Support\Facades\DB::table('arsip_barang')
+        $data = DB::table('arsip_barang')
             ->latest()
             ->get();
 
@@ -150,11 +150,14 @@ class BarangController extends Controller
 
     public function showArsip($id)
     {
-        $arsip = DB::table('arsip_barang')->find($id);
+        $arsip = DB::table('arsip_barang')
+            ->where('id', $id)
+            ->first();
 
         if (!$arsip) {
             abort(404);
         }
+
 
         $data = json_decode($arsip->data_json, true);
 

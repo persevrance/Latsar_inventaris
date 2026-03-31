@@ -95,12 +95,12 @@
 
                         @elseif($item->status == 'approved')
                         <button
-                            onclick='openModal(
-        {{ $item->id }},
-        @json($item->details->map(function($d){
-            return $d->barangItem->kode_item . " - " . ($d->barangItem->barang->nama_barang ?? "-");
-        }))
-    )'
+                            onclick=`openModal(
+                            {{ $item->id }},
+                            @json($item->details->map(function($d){
+                            return $d->barangItem->kode_item . " - " . ($d->barangItem->barang->nama_barang ?? "-");
+                            }))
+                            )`
                             class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs">
                             Dikembalikan
                         </button>

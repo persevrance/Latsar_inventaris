@@ -32,9 +32,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Peminjaman::class, 'approved_by');
     }
-
-    public function history()
-    {
-        return $this->hasMany(HistoryBarang::class);
-    }
 }
