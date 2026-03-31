@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\BarangItemController;
 use App\Http\Controllers\Admin\PeminjamanController as AdminPeminjaman;
 use App\Http\Controllers\Admin\PengembalianController;
 use App\Http\Controllers\Admin\HistoryController;
-
+use App\Http\Controllers\Auth\AuthController;
 // Pegawai Controllers
 use App\Http\Controllers\Pegawai\DashboardController as PegawaiDashboard;
 use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
@@ -17,19 +17,36 @@ use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
 
 /*
 |--------------------------------------------------------------------------
-| Public / Guest
+| Auth Routes
 |--------------------------------------------------------------------------
 */
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', fn() => view('welcome'))->name('home');
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 
 
 /*
 |--------------------------------------------------------------------------
-| Redirect After Login (Universal Entry Point)
+| Root Redirect (No Guest Allowed)
+|--------------------------------------------------------------------------
+*/
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect()->route('dashboard')
+        : redirect()->route('login');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Universal Dashboard Redirect
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->get('/dashboard', function () {
@@ -48,7 +65,7 @@ Route::middleware('auth')->get('/dashboard', function () {
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:admin', 'verified'])
+Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->as('admin.')
     ->group(function () {
@@ -59,7 +76,6 @@ Route::middleware(['auth', 'role:admin', 'verified'])
         Route::resource('barang', BarangController::class);
         Route::resource('barang-item', BarangItemController::class);
 
-        // Peminjaman (read-only)
         Route::resource('peminjaman', AdminPeminjaman::class)
             ->only(['index', 'show']);
 
@@ -69,14 +85,12 @@ Route::middleware(['auth', 'role:admin', 'verified'])
         Route::patch('peminjaman/{peminjaman}/reject', [AdminPeminjaman::class, 'reject'])
             ->name('peminjaman.reject');
 
-        // Pengembalian
         Route::prefix('pengembalian')->name('pengembalian.')->group(function () {
-            Route::get('{peminjaman}', [PengembalianController::class, 'create'])->name('create');
+            Route::get('create/{peminjaman}', [PengembalianController::class, 'create'])->name('create');
             Route::post('/', [PengembalianController::class, 'store'])->name('store');
             Route::get('{pengembalian}', [PengembalianController::class, 'show'])->name('show');
         });
 
-        // History
         Route::prefix('history')->name('history.')->group(function () {
             Route::get('barang', [HistoryController::class, 'index'])->name('barang');
             Route::get('barang/{barang}', [HistoryController::class, 'show'])->name('barang.show');
@@ -89,7 +103,7 @@ Route::middleware(['auth', 'role:admin', 'verified'])
 | Pegawai Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:pegawai', 'verified'])
+Route::middleware(['auth', 'role:pegawai'])
     ->prefix('pegawai')
     ->as('pegawai.')
     ->group(function () {
@@ -106,9 +120,7 @@ Route::middleware(['auth', 'role:pegawai', 'verified'])
 
 /*
 |--------------------------------------------------------------------------
-| Fallback (Prevent 404 Leakage)
+| Fallback
 |--------------------------------------------------------------------------
 */
-Route::fallback(function () {
-    abort(404);
-});
+Route::fallback(fn() => abort(404));
