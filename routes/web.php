@@ -14,14 +14,33 @@ use App\Http\Controllers\Admin\HistoryController;
 use App\Http\Controllers\Pegawai\DashboardController as PegawaiDashboard;
 use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
 
+
 /*
 |--------------------------------------------------------------------------
-| Public
+| Public / Guest
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', fn() => view('welcome'));
+Route::middleware('guest')->group(function () {
+    Route::get('/', fn() => view('welcome'))->name('home');
+});
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Redirect After Login (Universal Entry Point)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->get('/dashboard', function () {
+    $user = auth()->user();
+
+    return match ($user->role) {
+        'admin' => redirect()->route('admin.dashboard'),
+        'pegawai' => redirect()->route('pegawai.dashboard'),
+        default => abort(403)
+    };
+})->name('dashboard');
 
 
 /*
@@ -29,7 +48,7 @@ Route::get('/', fn() => view('welcome'));
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:admin'])
+Route::middleware(['auth', 'role:admin', 'verified'])
     ->prefix('admin')
     ->as('admin.')
     ->group(function () {
@@ -40,7 +59,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('barang', BarangController::class);
         Route::resource('barang-item', BarangItemController::class);
 
-        // Peminjaman (read-only for admin)
+        // Peminjaman (read-only)
         Route::resource('peminjaman', AdminPeminjaman::class)
             ->only(['index', 'show']);
 
@@ -52,23 +71,15 @@ Route::middleware(['auth', 'role:admin'])
 
         // Pengembalian
         Route::prefix('pengembalian')->name('pengembalian.')->group(function () {
-            Route::get('{peminjaman}', [PengembalianController::class, 'create'])
-                ->name('create');
-
-            Route::post('/', [PengembalianController::class, 'store'])
-                ->name('store');
-
-            Route::get('{pengembalian}', [PengembalianController::class, 'show'])
-                ->name('show');
+            Route::get('{peminjaman}', [PengembalianController::class, 'create'])->name('create');
+            Route::post('/', [PengembalianController::class, 'store'])->name('store');
+            Route::get('{pengembalian}', [PengembalianController::class, 'show'])->name('show');
         });
 
         // History
         Route::prefix('history')->name('history.')->group(function () {
-            Route::get('barang', [HistoryController::class, 'index'])
-                ->name('barang');
-
-            Route::get('barang/{barang}', [HistoryController::class, 'show'])
-                ->name('barang.show');
+            Route::get('barang', [HistoryController::class, 'index'])->name('barang');
+            Route::get('barang/{barang}', [HistoryController::class, 'show'])->name('barang.show');
         });
     });
 
@@ -78,7 +89,7 @@ Route::middleware(['auth', 'role:admin'])
 | Pegawai Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:pegawai'])
+Route::middleware(['auth', 'role:pegawai', 'verified'])
     ->prefix('pegawai')
     ->as('pegawai.')
     ->group(function () {
@@ -91,3 +102,13 @@ Route::middleware(['auth', 'role:pegawai'])
         Route::patch('peminjaman/{peminjaman}/cancel', [PegawaiPeminjaman::class, 'cancel'])
             ->name('peminjaman.cancel');
     });
+
+
+/*
+|--------------------------------------------------------------------------
+| Fallback (Prevent 404 Leakage)
+|--------------------------------------------------------------------------
+*/
+Route::fallback(function () {
+    abort(404);
+});
