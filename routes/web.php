@@ -22,7 +22,6 @@ use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
 
 Route::get('/', fn() => view('welcome'));
 
-require __DIR__ . '/auth.php';
 
 
 /*
