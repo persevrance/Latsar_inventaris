@@ -14,11 +14,6 @@ class Lokasi extends Model
 
     public $timestamps = false;
 
-    public function barang()
-    {
-        return $this->hasMany(Barang::class);
-    }
-
     public function barangItem()
     {
         return $this->hasMany(BarangItem::class);

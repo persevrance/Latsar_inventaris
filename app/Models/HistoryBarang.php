@@ -27,6 +27,13 @@ class HistoryBarang extends Model
         'tanggal' => 'datetime'
     ];
 
+    const AKTIVITAS = [
+        'PINJAM',
+        'KEMBALI',
+        'PINDAH_LOKASI',
+        'UPDATE_KONDISI'
+    ];
+
     public function barangItem()
     {
         return $this->belongsTo(BarangItem::class);

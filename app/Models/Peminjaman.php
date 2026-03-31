@@ -26,6 +26,15 @@ class Peminjaman extends Model
         'approved_at' => 'datetime',
     ];
 
+    // STATUS ENUM (optional helper)
+    const STATUS = [
+        'pending',
+        'approved',
+        'rejected',
+        'dipinjam',
+        'selesai'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
