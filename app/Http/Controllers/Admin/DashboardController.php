@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard', [
+        return view('pages.admin.dashboard.index', [
             'total_barang' => Barang::count(),
             'total_peminjaman' => Peminjaman::count(),
             'pending' => Peminjaman::where('status', 'pending')->count(),

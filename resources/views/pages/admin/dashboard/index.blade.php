@@ -7,15 +7,15 @@
 
 <div class="grid grid-cols-3 gap-4">
     <div class="bg-white p-4 rounded shadow">
-        Total Barang: {{ $totalBarang }}
+        Total Barang: {{ $total_barang }}
     </div>
 
     <div class="bg-white p-4 rounded shadow">
-        Dipinjam: {{ $dipinjam }}
+        Total Peminjaman: {{ $total_peminjaman }}
     </div>
 
     <div class="bg-white p-4 rounded shadow">
-        Tersedia: {{ $tersedia }}
+        Pending: {{ $pending }}
     </div>
 </div>
 @endsection

@@ -38,7 +38,7 @@
     $role = auth()->user()->role ?? null;
     @endphp
 
-    @include('components.sidebar', compact('role'))
+
 
     {{-- OVERLAY --}}
     <div x-show="sidebarOpen"
@@ -52,7 +52,7 @@
     <main class="min-h-screen transition-all duration-300 lg:ml-64 p-6">
 
         {{-- FLASH MESSAGE --}}
-        @include('components.flash')
+
 
         {{-- CONTENT --}}
         @yield('content')
