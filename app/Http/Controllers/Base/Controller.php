@@ -1,12 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Base;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Routing\Controller as LaravelController;
 
-class Controller extends BaseController
+class Controller extends LaravelController
 {
-    use AuthorizesRequests, ValidatesRequests;
+    protected function success($message = 'Success', $data = null)
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data'    => $data
+        ]);
+    }
+
+    protected function error($message = 'Error', $code = 400)
+    {
+        return response()->json([
+            'success' => false,
+            'message' => $message
+        ], $code);
+    }
 }
