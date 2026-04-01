@@ -16,7 +16,7 @@ class UpdateBarangItem
         }
 
         $item->update([
-            'kode_item' => $data['kode_item'],
+            'kode_item' => $data['kode_item'] ?? $item->kode_item,
             'kondisi'   => $data['kondisi'],
             'status'    => $status,
         ]);

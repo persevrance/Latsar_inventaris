@@ -40,7 +40,10 @@ class BarangItemController extends Controller
             abort(404);
         }
 
-        $dto = BarangItemDTO::fromArray($request->all());
+        $dto = BarangItemDTO::fromArray([
+            ...$request->all(),
+            'barang_id' => $barangId
+        ]);
 
         $update->execute($item, $dto->toArray());
 
