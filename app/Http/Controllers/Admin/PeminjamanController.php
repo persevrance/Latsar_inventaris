@@ -12,7 +12,9 @@ class PeminjamanController extends Controller
     public function index()
     {
         return view('pages.admin.peminjaman.index', [
-            'data' => Peminjaman::with('details.barangItem')->latest()->get()
+            'data' => Peminjaman::with('details.barangItem')
+                ->latest()
+                ->get(),
         ]);
     }
 
@@ -28,5 +30,12 @@ class PeminjamanController extends Controller
         $action->execute($peminjaman, auth()->id());
 
         return back()->with('success', 'Ditolak');
+    }
+
+    public function show(Peminjaman $peminjaman)
+    {
+        return view('pages.admin.peminjaman.show', [
+            'peminjaman' => $peminjaman->load('details.barangItem.barang', 'user')
+        ]);
     }
 }

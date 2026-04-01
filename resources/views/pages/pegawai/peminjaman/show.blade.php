@@ -8,7 +8,7 @@
 <div class="bg-white p-6 rounded shadow mb-4">
     <p><strong>Status:</strong> {{ $data->status }}</p>
     <p><strong>Tanggal Pinjam:</strong> {{ $data->tanggal_pinjam }}</p>
-    <p><strong>Tanggal Kembali:</strong> {{ $data->tanggal_kembali ?? '-' }}</p>
+    <p><strong>Tanggal Kembali:</strong> {{ $data->pengembalian->tanggal_kembali ?? '-' }}</p>
 </div>
 
 <h2 class="font-semibold mb-2">Barang Dipinjam</h2>
@@ -17,7 +17,7 @@
 <div class="bg-gray-50 p-3 rounded mb-2 flex justify-between">
     <div>
         {{ $d->barangItem->barang->nama_barang }}
-        ({{ $d->barangItem->kode }})
+        ({{ $d->barangItem->kode_item }})
     </div>
 
     <x-inventory.status-badge :status="$d->barangItem->status" />

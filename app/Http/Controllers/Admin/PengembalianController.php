@@ -16,9 +16,23 @@ class PengembalianController extends Controller
 
         $process->execute(
             $peminjaman,
-            $dto->toKeyValue()
+            $dto->toKeyValue(),
+            $request->catatan ?? []
         );
 
         return back()->with('success', 'Pengembalian diproses');
+    }
+
+    public function process(Request $request, Peminjaman $peminjaman, ProcessPengembalian $action)
+    {
+        $action->execute(
+            $peminjaman,
+            $request->items,
+            $request->catatan ?? []
+        );
+
+        return redirect()
+            ->route('admin.peminjaman.show', $peminjaman->id)
+            ->with('success', 'Pengembalian berhasil');
     }
 }

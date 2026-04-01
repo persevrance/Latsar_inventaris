@@ -16,7 +16,6 @@ use App\Http\Controllers\Master\LokasiController;
 use App\Http\Controllers\Pegawai\DashboardController as PegawaiDashboard;
 use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
 
-
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
@@ -99,10 +98,8 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::resource('peminjaman', AdminPeminjaman::class)
             ->only(['index', 'show']);
-
         Route::patch('peminjaman/{peminjaman}/approve', [AdminPeminjaman::class, 'approve'])
             ->name('peminjaman.approve');
-
         Route::patch('peminjaman/{peminjaman}/reject', [AdminPeminjaman::class, 'reject'])
             ->name('peminjaman.reject');
 
@@ -110,6 +107,8 @@ Route::middleware(['auth', 'role:admin'])
             Route::get('create/{peminjaman}', [PengembalianController::class, 'create'])->name('create');
             Route::post('/', [PengembalianController::class, 'store'])->name('store');
             Route::get('{pengembalian}', [PengembalianController::class, 'show'])->name('show');
+            Route::post('pengembalian/{peminjaman}', [PengembalianController::class, 'process'])
+                ->name('process');
         });
 
         Route::prefix('history')->name('history.')->group(function () {
@@ -141,6 +140,7 @@ Route::middleware(['auth', 'role:pegawai'])
 
         Route::patch('peminjaman/{peminjaman}/cancel', [PegawaiPeminjaman::class, 'cancel'])
             ->name('peminjaman.cancel');
+        Route::get('/barang/{id}/items', [PegawaiPeminjaman::class, 'getItems']);
     });
 
 

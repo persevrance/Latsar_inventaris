@@ -13,7 +13,8 @@ class DetailPengembalian extends Model
     protected $fillable = [
         'pengembalian_id',
         'barang_item_id',
-        'kondisi'
+        'kondisi_kembali',
+        'catatan'
     ];
 
     public function pengembalian()

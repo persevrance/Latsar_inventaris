@@ -19,9 +19,11 @@ class ProcessPengembalian
         $this->updateStatus = $updateStatus;
     }
 
-    public function execute(Peminjaman $peminjaman, array $items)
+    public function execute(Peminjaman $peminjaman, array $items, array $catatan = [])
     {
-        return DB::transaction(function () use ($peminjaman, $items) {
+        return DB::transaction(function () use ($peminjaman, $items, $catatan) {
+
+
 
             $pengembalian = Pengembalian::create([
                 'peminjaman_id' => $peminjaman->id,
@@ -34,6 +36,7 @@ class ProcessPengembalian
                     'pengembalian_id' => $pengembalian->id,
                     'barang_item_id'  => $itemId,
                     'kondisi'         => $kondisi,
+                    'catatan' => $catatan[$itemId] ?? null
                 ]);
 
                 $item = $peminjaman->details
@@ -45,7 +48,7 @@ class ProcessPengembalian
             }
 
             $peminjaman->update([
-                'status' => 'dikembalikan'
+                'status' => 'completed'
             ]);
 
             return $pengembalian;

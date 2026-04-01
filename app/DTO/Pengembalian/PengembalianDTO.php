@@ -19,7 +19,8 @@ class PengembalianDTO
         foreach ($data['items'] as $itemId => $kondisi) {
             $items[] = new DetailPengembalianDTO(
                 barang_item_id: $itemId,
-                kondisi: $kondisi
+                kondisi: $kondisi,
+                catatan: $data['catatan'][$itemId] ?? null
             );
         }
 

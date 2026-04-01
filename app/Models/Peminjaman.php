@@ -31,8 +31,8 @@ class Peminjaman extends Model
         'pending',
         'approved',
         'rejected',
-        'dipinjam',
-        'selesai'
+        'active',
+        'completed'
     ];
 
     public function user()

@@ -12,7 +12,7 @@
     <div class="mb-3">
         <label>{{ $d->barangItem->kode }}</label>
 
-        <select name="kondisi[{{ $d->id }}]" class="w-full border p-2 rounded">
+        <select name="items[{{  $d->barang_item_id }}]" class="w-full border p-2 rounded">
             <option value="baik">Baik</option>
             <option value="rusak">Rusak</option>
             <option value="hilang">Hilang</option>

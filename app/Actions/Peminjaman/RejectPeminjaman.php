@@ -9,7 +9,7 @@ class RejectPeminjaman
     public function execute(Peminjaman $peminjaman, int $adminId)
     {
         $peminjaman->update([
-            'status' => 'ditolak',
+            'status' => 'rejected',
             'approved_by' => $adminId,
         ]);
 

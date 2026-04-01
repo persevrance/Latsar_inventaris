@@ -9,7 +9,7 @@ class ReturnPeminjaman
     public function execute(Peminjaman $peminjaman)
     {
         $peminjaman->update([
-            'status' => 'dikembalikan'
+            'status' => 'completed'
         ]);
 
         return $peminjaman;

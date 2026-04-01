@@ -15,7 +15,8 @@ class BarangItem extends Model
         'barang_id',
         'kode_item',
         'kondisi',
-        'lokasi_id'
+        'lokasi_id',
+        'status'
     ];
 
     protected $casts = [
