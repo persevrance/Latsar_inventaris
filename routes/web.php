@@ -15,6 +15,7 @@ use App\Http\Controllers\Master\LokasiController;
 // Pegawai Controllers
 use App\Http\Controllers\Pegawai\DashboardController as PegawaiDashboard;
 use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
+use App\Http\Controllers\Pegawai\BarangController as PegawaiBarang;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,6 +142,9 @@ Route::middleware(['auth', 'role:pegawai'])
         Route::patch('peminjaman/{peminjaman}/cancel', [PegawaiPeminjaman::class, 'cancel'])
             ->name('peminjaman.cancel');
         Route::get('/barang/{id}/items', [PegawaiPeminjaman::class, 'getItems']);
+        Route::get('/barang/{id}/items', [PegawaiBarang::class, 'getItems']);
+        Route::get('/barang', [PegawaiBarang::class, 'index'])
+            ->name('barang.index');
     });
 
 
