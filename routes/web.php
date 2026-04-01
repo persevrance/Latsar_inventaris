@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\PeminjamanController as AdminPeminjaman;
 use App\Http\Controllers\Admin\PengembalianController;
 use App\Http\Controllers\Admin\HistoryController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Master\KategoriController;
+use App\Http\Controllers\Master\LokasiController;
 // Pegawai Controllers
 use App\Http\Controllers\Pegawai\DashboardController as PegawaiDashboard;
 use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
@@ -22,8 +24,8 @@ use App\Http\Controllers\Pegawai\PeminjamanController as PegawaiPeminjaman;
 */
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login.form');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
 
 Route::middleware('auth')->group(function () {
@@ -73,8 +75,27 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('dashboard', [AdminDashboard::class, 'index'])
             ->name('dashboard');
 
-        Route::resource('barang', BarangController::class);
-        Route::resource('barang-item', BarangItemController::class);
+        // Barang 
+        Route::resource('barang', BarangController::class)
+            ->except(['edit', 'show']);
+
+        // Nested Routes for Barang Items
+        Route::prefix('barang/{barang}')
+            ->name('barang.')
+            ->group(function () {
+
+                Route::get('/items', [BarangItemController::class, 'index'])
+                    ->name('items.index');
+
+                Route::post('/items', [BarangItemController::class, 'store'])
+                    ->name('items.store');
+
+                Route::put('/items/{item}', [BarangItemController::class, 'update'])
+                    ->name('items.update');
+
+                Route::delete('/items/{item}', [BarangItemController::class, 'destroy'])
+                    ->name('items.destroy');
+            });
 
         Route::resource('peminjaman', AdminPeminjaman::class)
             ->only(['index', 'show']);
@@ -95,6 +116,11 @@ Route::middleware(['auth', 'role:admin'])
             Route::get('barang', [HistoryController::class, 'index'])->name('barang');
             Route::get('barang/{barang}', [HistoryController::class, 'show'])->name('barang.show');
         });
+
+
+        // Master Data
+        Route::resource('kategori', KategoriController::class)->except(['create', 'edit', 'show']);
+        Route::resource('lokasi', LokasiController::class)->except(['create', 'edit', 'show']);
     });
 
 

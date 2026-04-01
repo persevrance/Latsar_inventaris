@@ -15,7 +15,6 @@ class BarangItem extends Model
         'barang_id',
         'kode_item',
         'kondisi',
-        'status',
         'lokasi_id'
     ];
 

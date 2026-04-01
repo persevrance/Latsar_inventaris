@@ -11,7 +11,7 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        return view('admin.peminjaman.index', [
+        return view('pages.admin.peminjaman.index', [
             'data' => Peminjaman::with('details.barangItem')->latest()->get()
         ]);
     }

@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('pegawai.dashboard', [
+        return view('pages.pegawai.dashboard.index', [
             'peminjaman' => Peminjaman::where('user_id', auth()->id())->latest()->get()
         ]);
     }

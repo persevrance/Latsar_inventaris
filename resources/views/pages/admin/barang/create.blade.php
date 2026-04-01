@@ -14,11 +14,21 @@
         <label class="block text-sm mb-1">Kategori</label>
         <select name="kategori_id" class="w-full border p-2 rounded">
             @foreach($kategori as $k)
-            <option value="{{ $k->id }}">{{ $k->nama }}</option>
+            <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
             @endforeach
         </select>
     </div>
 
-    <x-ui.button type="submit">Simpan</x-ui.button>
+    <div class="mb-4">
+        <label class="block text-sm mb-1">Lokasi Penyimpanan</label>
+        <select name="lokasi_id" class="w-full border p-2 rounded">
+            @foreach($lokasi as $l)
+            <option value="{{ $l->id }}">{{ $l->nama_lokasi }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <x-ui.button type="submit" label="Simpan" variant="primary" />
+    <x-ui.button type="button" label="Batal" variant="outline" onclick="window.history.back()" />
 </form>
 @endsection

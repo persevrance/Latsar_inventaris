@@ -1,4 +1,4 @@
-@extends( 'layouts.auth')
+@extends($layout ?? 'layouts.auth')
 
 @section('content')
 
@@ -20,7 +20,7 @@
             </p>
 
             <div class="flex items-center gap-4">
-                <a href="{{ route('login') }}"
+                <a href="#"
                     @click.prevent="showLogin = true"
                     class="px-4 py-2 w-full text-center bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700">
                     Masuk </a>

@@ -72,6 +72,22 @@
                     Arsip Barang
                 </a>
 
+                <div class="border-t border-white/20 my-2"></div>
+
+                <p class="text-xs uppercase text-blue-300 font-bold px-6 my-2 mb-2 tracking-wider">
+                    Master Data
+                </p>
+
+                <a href="/admin/kategori"
+                    class="{{ $baseLink }} {{ request()->is('admin/kategori*') ? $active : $inactive }}">
+                    Kategori Barang
+                </a>
+
+                <a href="/admin/lokasi"
+                    class="{{ $baseLink }} {{ request()->is('admin/lokasi*') ? $active : $inactive }}">
+                    Lokasi
+                </a>
+
                 {{-- ================= PEGAWAI ================= --}}
                 @else
 
