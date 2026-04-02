@@ -19,6 +19,7 @@ class HistoryBarang extends Model
         'lokasi_awal',
         'lokasi_akhir',
         'user_id',
+        'actor_id',
         'referensi_id',
         'keterangan'
     ];
@@ -28,10 +29,10 @@ class HistoryBarang extends Model
     ];
 
     const AKTIVITAS = [
-        'PINJAM',
-        'KEMBALI',
-        'PINDAH_LOKASI',
-        'UPDATE_KONDISI'
+        'PINJAM' => 'dipinjam',
+        'KEMBALI' => 'dikembalikan',
+        'UPDATE_KONDISI' => 'perubahan_kondisi',
+        'PINDAH_LOKASI' => 'dipindahkan',
     ];
 
     public function barangItem()
@@ -52,5 +53,20 @@ class HistoryBarang extends Model
     public function lokasiAkhir()
     {
         return $this->belongsTo(Lokasi::class, 'lokasi_akhir');
+    }
+
+    public function pengembalian()
+    {
+        return $this->belongsTo(\App\Models\Pengembalian::class, 'referensi_id');
+    }
+    public function detailPengembalian()
+    {
+        return $this->hasOne(\App\Models\DetailPengembalian::class, 'pengembalian_id', 'referensi_id')
+            ->whereColumn('barang_item_id', 'barang_item_id');
+    }
+
+    public function actor()
+    {
+        return $this->belongsTo(User::class, 'actor_id');
     }
 }

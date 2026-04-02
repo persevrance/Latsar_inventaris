@@ -57,8 +57,8 @@
                     Pengembalian
                 </a> -->
 
-                <a href="/admin/laporan"
-                    class="{{ $baseLink }} {{ request()->is('admin/laporan*') ? $active : $inactive }}">
+                <a href="{{ route('admin.history.laporan') }}"
+                    class="{{ $baseLink }} {{ request()->is('admin/history/laporan*') ? $active : $inactive }}">
                     Laporan
                 </a>
 

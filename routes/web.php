@@ -97,6 +97,7 @@ Route::middleware(['auth', 'role:admin'])
                     ->name('items.destroy');
             });
 
+        // Peminjaman
         Route::resource('peminjaman', AdminPeminjaman::class)
             ->only(['index', 'show']);
         Route::patch('peminjaman/{peminjaman}/approve', [AdminPeminjaman::class, 'approve'])
@@ -104,6 +105,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::patch('peminjaman/{peminjaman}/reject', [AdminPeminjaman::class, 'reject'])
             ->name('peminjaman.reject');
 
+        // Pengembalian
         Route::prefix('pengembalian')->name('pengembalian.')->group(function () {
             Route::get('create/{peminjaman}', [PengembalianController::class, 'create'])->name('create');
             Route::post('/', [PengembalianController::class, 'store'])->name('store');
@@ -112,9 +114,12 @@ Route::middleware(['auth', 'role:admin'])
                 ->name('process');
         });
 
+        // History
         Route::prefix('history')->name('history.')->group(function () {
-            Route::get('barang', [HistoryController::class, 'index'])->name('barang');
-            Route::get('barang/{barang}', [HistoryController::class, 'show'])->name('barang.show');
+            Route::get('laporan', [HistoryController::class, 'index'])
+                ->name('laporan');
+            Route::get('barang/{barang}', [HistoryController::class, 'show'])
+                ->name('barang.show');
         });
 
 

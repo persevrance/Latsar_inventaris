@@ -17,7 +17,7 @@ class ApprovePeminjaman
 
             // guard
             if ($peminjaman->status !== 'pending') {
-                throw new \Exception('Status tidak valid');
+                return $peminjaman;
             }
 
             // update peminjaman
@@ -41,7 +41,7 @@ class ApprovePeminjaman
                 }
 
                 if ($item->status !== 'tersedia') {
-                    throw new \Exception("Barang tidak tersedia");
+                    continue; // skip jika barang tidak tersedia
                 }
 
                 $item->update([
