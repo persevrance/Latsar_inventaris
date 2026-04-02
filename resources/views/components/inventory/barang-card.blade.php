@@ -40,17 +40,38 @@
         </div>
 
         <div class="flex gap-2 flex-wrap">
-            <form method="POST" action="{{ route('admin.barang.destroy', $barang->id) }}">
+            <form method="POST" action="{{ route('admin.barang.destroy', $barang->id) }}" class="form-delete">
                 @csrf
                 @method('DELETE')
 
                 <x-ui.button
-                    type="submit"
+                    type="button"
                     variant="danger"
                     label="Hapus"
-                    onclick="return confirm('Yakin Hapus?')" />
+                    onclick="confirmDelete(this)" />
             </form>
         </div>
     </div>
 
 </div>
+
+<script>
+    function confirmDelete(el) {
+        const form = el.closest('form');
+
+        Swal.fire({
+            title: 'Hapus Barang?',
+            text: "Data tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>
