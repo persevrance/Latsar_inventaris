@@ -99,20 +99,70 @@
     </div>
 
     {{-- FOOTER --}}
-    <div class="px-6 py-4 border-t border-white/10 bg-black/10">
-        <p class="text-sm font-semibold text-white/90">
-            {{ $user->nama ?? 'User' }}
-        </p>
-        <p class="text-xs text-blue-200">
-            {{ $user->email }}
-        </p>
+    <div x-data="{ open: false }" class="relative px-6 py-4 border-t border-white/10 bg-black/10">
 
-        <div class="flex justify-end">
+        {{-- Trigger --}}
+        <button @click="open = !open"
+            class="w-full flex items-center gap-3 text-left focus:outline-none">
+
+            {{-- Avatar --}}
+            <img
+                src="{{ $user->photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->nama ?? 'User') . '&background=3b82f6&color=fff' }}"
+                alt="avatar"
+                class="w-10 h-10 rounded-full object-cover border border-white/20">
+
+            {{-- User Info --}}
+            <div class="flex-1">
+                <p class="text-sm font-semibold text-white/90">
+                    {{ $user->nama ?? 'User' }}
+                </p>
+                <p class="text-xs text-blue-200">
+                    {{ $user->email }}
+                </p>
+            </div>
+
+            {{-- Caret --}}
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-white/70"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+
+        {{-- Dropdown --}}
+        <div x-show="open"
+            @click.outside="open = false"
+            x-transition
+            class="absolute bottom-16 left-6 right-6 bg-white rounded-xl shadow-lg overflow-hidden z-50">
+
+            {{-- Ganti Password --}}
+            <a href="{{ route('profile.password.edit') }}"
+                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+
+                <!-- ICON -->
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 10-6 0v2c0 1.657 1.343 3 3 3zm0 0v2m0 4h.01M6 20h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                </svg>
+
+                Ganti Password
+            </a>
+
+            {{-- Logout --}}
             <form method="POST" action="{{ route('logout') }}" id="logout-form">
                 @csrf
 
-                <button type="button" onclick="confirmLogout()"
-                    class="flex items-center gap-1.5 text-xs font-medium text-white/70 hover:text-red-300 transition">
+                <button type="button"
+                    onclick="confirmLogout()"
+                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
 
                     <!-- ICON -->
                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -121,13 +171,12 @@
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         stroke-width="2">
-
                         <path stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
                     </svg>
 
-                    <span>Logout</span>
+                    Logout
                 </button>
             </form>
         </div>

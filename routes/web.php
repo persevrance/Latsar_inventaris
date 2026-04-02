@@ -49,7 +49,7 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Universal Dashboard Redirect
+| Universal 
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->get('/dashboard', function () {
@@ -61,6 +61,13 @@ Route::middleware('auth')->get('/dashboard', function () {
         default => abort(403)
     };
 })->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/password', [AuthController::class, 'editPassword'])
+        ->name('profile.password.edit');
+
+    Route::put('/profile/password', [AuthController::class, 'updatePassword'])
+        ->name('profile.password.update');
+});
 
 
 /*
