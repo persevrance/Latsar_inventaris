@@ -14,6 +14,8 @@
         <table class="w-full text-sm text-left">
             <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
                 <tr>
+                    <th class="px-6 py-3">No</th>
+                    <th class="px-6 py-3">Kode Barang</th>
                     <th class="px-6 py-3">Nama Barang</th>
                     <th class="px-6 py-3">Kategori</th>
                     <th class="px-6 py-3">Lokasi</th>
@@ -25,6 +27,12 @@
             <tbody class="divide-y">
                 @forelse($barang as $item)
                 <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4">
+                        {{ $loop->iteration }}
+                    </td>
+                    <td class="px-6 py-4 font-medium text-gray-800">
+                        {{ $item->kode_barang }}
+                    </td>
                     <td class="px-6 py-4 font-medium text-gray-800">
                         {{ $item->nama_barang }}
                     </td>
@@ -90,7 +98,7 @@
                 <table class="w-full text-sm">
                     <thead class="bg-gray-100 text-xs text-gray-600 uppercase">
                         <tr>
-                            <th class="px-4 py-2">Kode</th>
+                            <th class="px-4 py-2">Kode Item</th>
                             <th class="px-4 py-2">Kondisi</th>
                             <th class="px-4 py-2">Status</th>
                         </tr>
@@ -99,6 +107,7 @@
                     <tbody class="divide-y">
                         <template x-for="item in items" :key="item.id">
                             <tr>
+                                <td class="px-4 py-2"></td>
                                 <td class="px-4 py-2" x-text="item.kode_item"></td>
                                 <td class="px-4 py-2 capitalize" x-text="item.kondisi"></td>
                                 <td class="px-4 py-2">

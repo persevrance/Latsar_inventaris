@@ -16,7 +16,8 @@ class PeminjamanController extends Controller
     public function index()
     {
         $data = Peminjaman::with([
-            'details.barangItem.barang'
+            'details.barangItem.barang',
+            'pengembalian'
         ])
             ->where('user_id', auth()->id())
             ->latest()
