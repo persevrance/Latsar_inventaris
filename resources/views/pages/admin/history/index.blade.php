@@ -14,7 +14,7 @@
             <option value="">Semua Barang</option>
             @foreach($barangs as $barang)
             <option value="{{ $barang->id }}">
-                {{ $barang->nama }}
+                {{ $barang->nama_barang }}
             </option>
             @endforeach
         </select>
