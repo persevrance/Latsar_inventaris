@@ -52,11 +52,6 @@
                     Peminjaman
                 </a>
 
-                <!-- <a href="/admin/pengembalian"
-                    class="{{ $baseLink }} {{ request()->is('admin/pengembalian*') ? $active : $inactive }}">
-                    Pengembalian
-                </a> -->
-
                 <a href="{{ route('admin.history.laporan') }}"
                     class="{{ $baseLink }} {{ request()->is('admin/history/laporan*') ? $active : $inactive }}">
                     Laporan
@@ -65,11 +60,6 @@
                 <a href="/admin/users/create"
                     class="{{ $baseLink }} {{ request()->is('admin/users/create') ? $active : $inactive }}">
                     Tambah User
-                </a>
-
-                <a href="/admin/arsip"
-                    class="{{ $baseLink }} {{ request()->is('admin/arsip*') ? $active : $inactive }}">
-                    Arsip Barang
                 </a>
 
                 <div class="border-t border-white/20 my-2"></div>

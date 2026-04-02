@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\BarangItemController;
 use App\Http\Controllers\Admin\PeminjamanController as AdminPeminjaman;
 use App\Http\Controllers\Admin\PengembalianController;
 use App\Http\Controllers\Admin\HistoryController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Master\KategoriController;
 use App\Http\Controllers\Master\LokasiController;
@@ -121,6 +122,9 @@ Route::middleware(['auth', 'role:admin'])
             Route::get('barang/{barang}', [HistoryController::class, 'show'])
                 ->name('barang.show');
         });
+
+        //user
+        Route::resource('users', UserController::class);
 
 
         // Master Data
