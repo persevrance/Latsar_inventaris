@@ -64,28 +64,28 @@
 
         <div class="flex justify-end gap-2">
 
-            <x-ui.button type="button" onclick="confirmSubmit()" label="Simpan" />
+            <x-ui.button type="submit" label="Simpan" />
         </div>
 
     </form>
 </div>
 
 <script>
-    function confirmSubmit() {
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
         Swal.fire({
             title: 'Simpan User?',
             text: "Data user akan ditambahkan",
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#2563eb',
-            cancelButtonColor: '#6b7280',
             confirmButtonText: 'Ya, simpan',
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                document.querySelector('form').submit();
+                e.target.submit();
             }
         });
-    }
+    });
 </script>
 @endsection

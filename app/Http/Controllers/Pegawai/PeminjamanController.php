@@ -33,17 +33,21 @@ class PeminjamanController extends Controller
             'tanggal_kembali_rencana' => 'required|date|after_or_equal:tanggal_pinjam',
         ]);
 
-        $dto = PeminjamanDTO::fromArray([
-            'user_id' => auth()->id(),
-            'items' => [$request->item_id],
-            'tanggal_pinjam' => $request->tanggal_pinjam,
-            'tanggal_kembali_rencana' => $request->tanggal_kembali_rencana,
-            'keterangan' => $request->keterangan,
-        ]);
+        try {
+            $dto = PeminjamanDTO::fromArray([
+                'user_id' => auth()->id(),
+                'items' => [$request->item_id],
+                'tanggal_pinjam' => $request->tanggal_pinjam,
+                'tanggal_kembali_rencana' => $request->tanggal_kembali_rencana,
+                'keterangan' => $request->keterangan,
+            ]);
 
-        $action->execute($dto);
+            $action->execute($dto);
 
-        return back()->with('success', 'Pengajuan berhasil');
+            return back()->with('success', 'Pengajuan berhasil');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     public function create()

@@ -42,10 +42,6 @@
                 {{-- ================= ADMIN ================= --}}
                 @if($user->role === 'admin')
 
-                <a href="/admin/barang"
-                    class="{{ $baseLink }} {{ request()->is('admin/barang*') ? $active : $inactive }}">
-                    Barang
-                </a>
 
                 <a href="/admin/peminjaman"
                     class="{{ $baseLink }} {{ request()->is('admin/peminjaman*') ? $active : $inactive }}">
@@ -67,6 +63,11 @@
                 <p class="text-xs uppercase text-blue-300 font-bold px-6 my-2 mb-2 tracking-wider">
                     Master Data
                 </p>
+
+                <a href="/admin/barang"
+                    class="{{ $baseLink }} {{ request()->is('admin/barang*') ? $active : $inactive }}">
+                    Barang
+                </a>
 
                 <a href="/admin/kategori"
                     class="{{ $baseLink }} {{ request()->is('admin/kategori*') ? $active : $inactive }}">
