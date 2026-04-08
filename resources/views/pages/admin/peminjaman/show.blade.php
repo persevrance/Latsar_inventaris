@@ -13,6 +13,7 @@
 
 
 <div class="bg-white p-6 rounded shadow mb-4">
+    <p><strong>ID Pinjam:</strong> {{ $peminjaman->id }}</p>
     <p><strong>Peminjam:</strong> {{ $peminjaman->user->nama }}</p>
     <p><strong>Status:</strong> <x-inventory.status-badge :status="$peminjaman->status" /></p>
     <p><strong>Tanggal Pinjam:</strong> {{ $peminjaman->tanggal_pinjam }}</p>

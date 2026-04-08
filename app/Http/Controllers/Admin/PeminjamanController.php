@@ -8,15 +8,20 @@ use App\Models\Peminjaman;
 use App\Actions\Peminjaman\ApprovePeminjaman;
 use App\Actions\Peminjaman\RejectPeminjaman;
 use App\Models\HistoryBarang;
+use Illuminate\Http\Request;
 
 class PeminjamanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Peminjaman::with('details.barangItem.barang', 'user');
+
+        if ($request->filled('search')) {
+            $query->where('id', $request->search);
+        }
+
         return view('pages.admin.peminjaman.index', [
-            'data' => Peminjaman::with('details.barangItem')
-                ->latest()
-                ->get(),
+            'data' => $query->latest()->get(),
         ]);
     }
 
