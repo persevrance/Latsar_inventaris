@@ -128,6 +128,8 @@ Route::middleware(['auth', 'role:admin'])
                 ->name('laporan');
             Route::get('barang/{barang}', [HistoryController::class, 'show'])
                 ->name('barang.show');
+            Route::get('item/{item}', [HistoryController::class, 'showItem'])
+                ->name('item.show');
         });
 
         //user

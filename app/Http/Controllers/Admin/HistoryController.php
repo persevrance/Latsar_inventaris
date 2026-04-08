@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Base\Controller;
 use App\Models\HistoryBarang;
 use App\Models\Barang;
+use App\Models\BarangItem;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -53,6 +54,23 @@ class HistoryController extends Controller
 
         return view('pages.admin.history.show', [
             'barang' => $barang,
+            'histories' => $histories
+        ]);
+    }
+    public function showItem(BarangItem $item)
+    {
+        $histories = HistoryBarang::with([
+            'barangItem',
+            'user',
+            'actor',
+            'detailPengembalian'
+        ])
+            ->where('barang_item_id', $item->id)
+            ->latest()
+            ->paginate(10);
+
+        return view('pages.admin.history.show', [
+            'item' => $item,
             'histories' => $histories
         ]);
     }

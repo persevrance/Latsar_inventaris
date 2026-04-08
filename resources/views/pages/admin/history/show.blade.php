@@ -6,7 +6,13 @@
 <div class="p-6">
     <div class="flex flex-row justify-between gap-4 my-4">
         <h1 class="text-xl font-bold mb-4">
+            @if(isset($item))
+            History: {{ $item->barang->nama_barang }} - {{ $item->kode_item }}
+            @elseif(isset($barang))
             History: {{ $barang->nama_barang }}
+            @else
+            History Barang
+            @endif
         </h1>
         <x-ui.button
             label="Kembali"

@@ -70,8 +70,11 @@
                 </td>
 
                 {{-- ITEM --}}
-                <td class="p-3 text-gray-600">
-                    {{ $history->barangItem->kode_item ?? '-' }}
+                <td class="p-3 font-medium ">
+                    <a href="{{ route('admin.history.item.show', $history->barangItem->id) }}"
+                        class="hover:underline">
+                        {{ $history->barangItem->kode_item ?? '-' }}
+                    </a>
                 </td>
 
                 {{-- AKTIVITAS --}}

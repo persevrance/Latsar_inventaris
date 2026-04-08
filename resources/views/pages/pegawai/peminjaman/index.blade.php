@@ -16,6 +16,7 @@
         <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
             <tr>
                 <th class="px-4 py-2">No</th>
+                <th class="px-4 py-2">ID Pinjam</th>
                 <th class="px-4 py-2">Barang</th>
                 <th class="px-4 py-2">Kode Item</th>
                 <th class="px-4 py-2">Tanggal Peminjaman</th>
@@ -29,6 +30,9 @@
             <tr class="hover:bg-gray-50 transition">
                 <td class="px-4 py-2 font-semibold">
                     {{ $loop->parent->iteration }}
+                </td>
+                <td class="px-4 py-2">
+                    {{ $p->id }}
                 </td>
                 <td class="px-4 py-2 font-semibold">
                     {{ $d->barangItem->barang->nama_barang ?? '-' }}
