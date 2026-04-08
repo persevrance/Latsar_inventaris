@@ -4,10 +4,16 @@
 
 @section('content')
 <div class="p-6">
+    <div class="flex flex-row justify-between gap-4 my-4">
+        <h1 class="text-xl font-bold mb-4">
+            History: {{ $barang->nama_barang }}
+        </h1>
+        <x-ui.button
+            label="Kembali"
+            variant="outline"
+            onclick="window.history.back()" />
+    </div>
 
-    <h1 class="text-xl font-bold mb-4">
-        History: {{ $barang->nama_barang }}
-    </h1>
 
     <table class="w-full text-sm shadow rounded">
         <thead class="text-center">

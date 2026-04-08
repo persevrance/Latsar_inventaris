@@ -3,7 +3,14 @@
 @section('title', 'Detail Peminjaman')
 
 @section('content')
-<h1 class="text-xl font-bold mb-4">Detail Peminjaman</h1>
+<div class="flex flex-row justify-between gap-4 my-4">
+    <h1 class="text-xl font-bold mb-4">Detail Peminjaman</h1>
+    <x-ui.button
+        label="Kembali"
+        variant="outline"
+        onclick="window.history.back()" />
+</div>
+
 
 <div class="bg-white p-6 rounded shadow mb-4">
     <p><strong>Peminjam:</strong> {{ $peminjaman->user->nama }}</p>

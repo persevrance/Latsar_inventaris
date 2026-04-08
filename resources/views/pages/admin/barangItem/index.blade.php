@@ -8,10 +8,19 @@
     Item - {{ $barang->nama_barang }}
 </h1>
 
-<x-ui.button
-    label="Tambah Item"
-    onclick="openCreateModal()"
-    variant="primary" />
+<div class="flex flex-row justify-end gap-4 my-4">
+    <x-ui.button
+        label="Tambah Item"
+        onclick="openCreateModal()"
+        variant="primary" />
+
+    <x-ui.button
+        label="Kembali"
+        variant="outline"
+        onclick="window.history.back()" />
+</div>
+
+
 
 <div class="mt-4 bg-white shadow rounded-xl p-4">
 
