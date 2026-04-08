@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('pages.admin.users.index', [
+        return view('pages.admin.users.create', [
             'users' => User::latest()->get()
         ]);
     }
