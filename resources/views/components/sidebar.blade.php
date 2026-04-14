@@ -55,7 +55,7 @@
 
                 <a href="/admin/users/create"
                     class="{{ $baseLink }} {{ request()->is('admin/users/create') ? $active : $inactive }}">
-                    Tambah User
+                    Buat Akun Pegawai
                 </a>
 
                 <div class="border-t border-white/20 my-2"></div>

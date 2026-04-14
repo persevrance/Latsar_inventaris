@@ -44,7 +44,11 @@ class PeminjamanController extends Controller
 
             $action->execute($dto);
 
-            return back()->with('success', 'Pengajuan berhasil');
+            return redirect()
+                ->route('pegawai.peminjaman.index')
+                ->with([
+                    'success' => 'Pengajuan berhasil'
+                ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
